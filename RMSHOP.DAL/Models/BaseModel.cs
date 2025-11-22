@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace RMSHOP.DAL.Models
 {
-    public class Category: BaseModel
+    public class BaseModel
     {
-       
-
-        public List<CategoryTranslation> Translations { get; set; }
+        public int Id { get; set; }
+        public Status Status { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
