@@ -173,3 +173,8 @@ C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\RMSHOP.PL.Resources.SharedResource.ar.resources
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\RMSHOP.PL.csproj.GenerateResource.cache
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\ar\RMSHOP.PL.resources.dll
+C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0\Mapster.dll
+C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0\Mapster.Core.dll
+C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure;
+using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using RMSHOP.DAL.Data;
+using RMSHOP.DAL.DTO.Request;
+using RMSHOP.DAL.DTO.Response;
+using RMSHOP.DAL.Models;
 using RMSHOP.PL.Resources;
 
 namespace RMSHOP.PL.Controllers
@@ -19,9 +25,23 @@ namespace RMSHOP.PL.Controllers
             _localizer = localizer;
         }
 
+
+        
+
         [HttpGet("")]
         public IActionResult Index() {
-            return Ok(new {message= _localizer["Success"].Value });
+            var categories= _context.Categories.Include(c=>c.Translations).ToList();
+            var response =categories.Adapt<List<CategoryResponse>>();
+            return Ok(new {message= _localizer["Success"].Value, response });
+        }
+
+        [HttpPost("")]
+        public IActionResult Create(CategoryRequest request) {
+            var category= request.Adapt<Category>();
+            _context.Add(category);
+            _context.SaveChanges();
+
+            return Ok(new { message = _localizer["Success"].Value });
         }
     }
 }
