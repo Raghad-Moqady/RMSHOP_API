@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using RMSHOP.BLL.Service;
 using RMSHOP.DAL.Data;
+using RMSHOP.DAL.Repository;
 using System.Globalization;
 
 namespace RMSHOP.PL
@@ -61,6 +63,13 @@ namespace RMSHOP.PL
             //Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+            // ICategoeryRepository dependency Injection
+            builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
+            // ICategoryService dependency Injection
+            builder.Services.AddScoped<ICategoryService,CategoryService>();
+
 
             var app = builder.Build();
 

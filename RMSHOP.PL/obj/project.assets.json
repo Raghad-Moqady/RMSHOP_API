@@ -1727,6 +1727,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "Mapster": "7.4.0",
           "RMSHOP.DAL": "1.0.0"
         },
         "compile": {
@@ -5225,7 +5226,6 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "Mapster >= 7.4.0",
       "Microsoft.AspNetCore.OpenApi >= 9.0.8",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.11",
       "RMSHOP.BLL >= 1.0.0",
@@ -5286,10 +5286,6 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
-          "Mapster": {
-            "target": "Package",
-            "version": "[7.4.0, )"
-          },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[9.0.8, )"
