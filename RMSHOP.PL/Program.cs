@@ -1,9 +1,11 @@
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RMSHOP.BLL.Service;
 using RMSHOP.DAL.Data;
+using RMSHOP.DAL.Models;
 using RMSHOP.DAL.Repository;
 using System.Globalization;
 
@@ -35,6 +37,12 @@ namespace RMSHOP.PL
             //way3 to connect with database using dependency Injection way
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+            // Identity
+            builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
 
             const string defaultCulture = "en";
