@@ -24,23 +24,41 @@ namespace RMSHOP.BLL.Service.Identity
         //DTO >> RegisterRequest
         public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
         {
-             var user= request.Adapt<ApplicationUser>();
-             var result= await _userManager.CreateAsync(user, request.Password);
-             await _userManager.AddToRoleAsync(user, "User");
-
-            if (!result.Succeeded) 
+            try
             {
+                var user = request.Adapt<ApplicationUser>();
+                var result = await _userManager.CreateAsync(user, request.Password);
+
+                if (!result.Succeeded)
+                {
+                    //400
+                    return new RegisterResponse()
+                    {
+                        Success = false,
+                        Message = "User Creation Failed",
+                        Errors = result.Errors.Select(e => e.Description).ToList()
+                    };
+                }
+                await _userManager.AddToRoleAsync(user, "User");
+                //200
                 return new RegisterResponse()
                 {
-                    Message = "Error"
+                    Success = true,
+                    Message = "Success"
+                };
+
+
+            }
+            catch (Exception ex) {
+                //500
+                return new RegisterResponse()
+                {
+                    Success = false,
+                    UnexpectedErrorFlag=true,
+                    Message = "An Unexpected error !",
+                    Errors = new List<string> { ex.Message }
                 };
             }
-            return new RegisterResponse()
-            {
-                Message = "Success"
-            };
-             
-
         }
     }
 }

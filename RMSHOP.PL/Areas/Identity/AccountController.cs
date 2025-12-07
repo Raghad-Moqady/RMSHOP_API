@@ -20,7 +20,17 @@ namespace RMSHOP.PL.Areas.Identity
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterRequest request) {
           var response=await _authenticationService.RegisterAsync(request);
-          return Ok(response);
+            //400
+            if (!response.Success) {
+                 return BadRequest(response);
+            }
+            //500
+            if (response.UnexpectedErrorFlag) {
+                return StatusCode(500, response);
+            }
+            //200
+            return Ok(response);
         }
     }
 }
+
