@@ -12,5 +12,7 @@ namespace RMSHOP.DAL.DTO.Response
         public bool UnexpectedErrorFlag { get; set; } = false;
         public string Message { get; set; }
         public List<string>? Errors { get; set; }
+
+        public string? AccessToken {  get; set; }
     }
 }

@@ -1,11 +1,15 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RMSHOP.DAL.DTO.Request;
 using RMSHOP.DAL.DTO.Response;
 using RMSHOP.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,10 +18,12 @@ namespace RMSHOP.BLL.Service.Identity
     public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         public async Task<LoginResponse> LoginAsync(LoginRequest request)
@@ -49,6 +55,7 @@ namespace RMSHOP.BLL.Service.Identity
                 {
                     Success = true,
                     Message = "Login Successfully",
+                    AccessToken = await GenerateAccessToken(user),
                 };
             }
             catch (Exception ex) {
@@ -63,6 +70,7 @@ namespace RMSHOP.BLL.Service.Identity
             
             }
         }
+
 
         //Domain Model is >> ApplicationUser:IdentityUser
         //DTO >> RegisterRequest
@@ -103,6 +111,32 @@ namespace RMSHOP.BLL.Service.Identity
                     Errors = new List<string> { ex.Message }
                 };
             }
+        }
+
+
+        //Generate Token (jwt)
+        private async Task<string> GenerateAccessToken(ApplicationUser user)
+        {
+            //Payload: 
+            var userClaims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier,user.Id),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+            };
+
+            //Generate Token :
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: userClaims,
+                expires: DateTime.UtcNow.AddMinutes(30),
+                signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
