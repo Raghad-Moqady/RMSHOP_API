@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RMSHOP.DAL.DTO.Request;
@@ -19,11 +20,14 @@ namespace RMSHOP.BLL.Service.Identity
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IEmailSender _emailSender;
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, IConfiguration configuration
+            ,IEmailSender emailSender)
         {
             _userManager = userManager;
             _configuration = configuration;
+            _emailSender = emailSender;
         }
 
         public async Task<LoginResponse> LoginAsync(LoginRequest request)
@@ -92,6 +96,15 @@ namespace RMSHOP.BLL.Service.Identity
                     };
                 }
                 await _userManager.AddToRoleAsync(user, "User");
+                //Send Confirm Email
+                await _emailSender.SendEmailAsync(user.Email, "welcome to KidZone Store",
+                    $@" <div style='text-align:center; font-family: Arial, sans-serif;'>
+                    <h1 style='color:orange;'>Welcome {user.UserName}!</h1>
+                   <p>Thank you for joining <strong>KidZone Store</strong>. We're happy to have you!</p>
+                    <a href='' style='display:inline-block; padding:10px 20px; background-color:orange; color:white; text-decoration:none; margin-top:20px;'>
+                      Confirm Email
+                     </a>
+                    </div>");
                 //200
                 return new RegisterResponse()
                 {

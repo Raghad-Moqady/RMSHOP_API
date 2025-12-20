@@ -1,10 +1,12 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using RMSHOP.BLL.Service;
 using RMSHOP.BLL.Service.Categories;
 using RMSHOP.BLL.Service.Identity;
 using RMSHOP.DAL.Data;
@@ -137,6 +139,9 @@ namespace RMSHOP.PL
 
             //Authentication
             builder.Services.AddScoped<IAuthenticationService,AuthenticationService>();
+
+            //To send emails
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 
             var app = builder.Build();
