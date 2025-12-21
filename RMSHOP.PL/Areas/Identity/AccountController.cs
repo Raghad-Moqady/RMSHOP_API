@@ -50,6 +50,13 @@ namespace RMSHOP.PL.Areas.Identity
             //200
             return Ok(response);
         }
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string token, string userId) {
+            var response=await _authenticationService.ConfirmEmailAsync(token, userId);
+            return Ok(new {message= response});
+        }
+         
     }
 }
 

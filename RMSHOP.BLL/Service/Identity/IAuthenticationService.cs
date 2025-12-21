@@ -15,5 +15,8 @@ namespace RMSHOP.BLL.Service.Identity
 
         //LogIn
         Task<LoginResponse> LoginAsync(LoginRequest request);
+
+        //Confirm Email
+        Task<string> ConfirmEmailAsync(string token, string userId);
     }
 }

@@ -96,14 +96,18 @@ namespace RMSHOP.BLL.Service.Identity
                     };
                 }
                 await _userManager.AddToRoleAsync(user, "User");
-                //Send Confirm Email
+                
+                //Send Email & Confirm Email 
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                token = Uri.EscapeDataString(token);
+                var emailUrl = $"http://localhost:5073/api/auth/Account/ConfirmEmail?token={token}&userId={user.Id}";
                 await _emailSender.SendEmailAsync(user.Email, "welcome to KidZone Store",
                     $@" <div style='text-align:center; font-family: Arial, sans-serif;'>
                     <h1 style='color:orange;'>Welcome {user.UserName}!</h1>
-                   <p>Thank you for joining <strong>KidZone Store</strong>. We're happy to have you!</p>
-                    <a href='' style='display:inline-block; padding:10px 20px; background-color:orange; color:white; text-decoration:none; margin-top:20px;'>
+                    <p>Thank you for joining <strong>KidZone Store</strong>. We're happy to have you!</p>
+                    <a href='{emailUrl}' style='display:inline-block; padding:10px 20px; background-color:orange; color:white; text-decoration:none; margin-top:20px;'>
                       Confirm Email
-                     </a>
+                    </a>
                     </div>");
                 //200
                 return new RegisterResponse()
@@ -150,6 +154,18 @@ namespace RMSHOP.BLL.Service.Identity
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        //ConfirmEmail
+        public async Task<string> ConfirmEmailAsync(string token, string userId)
+        {
+            var user= await _userManager.FindByIdAsync(userId);
+            if(user is null) return "This user is not registered or the account has been deleted";
+            if(user.EmailConfirmed == true) return "This email is already confirmed";
+
+            var result = await _userManager.ConfirmEmailAsync(user,token);
+            if(!result.Succeeded) return "Email confirmation failed";
+            return "Email confirmed successfully"; 
         }
     }
 }
