@@ -69,6 +69,19 @@ namespace RMSHOP.PL.Areas.Identity
             return Ok(response);
         }
 
+        [HttpPatch("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            var response = await _authenticationService.ResetPasswordAsync(request);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            } 
+            return Ok(response);
+
+        }
+
+
     }
 }
 

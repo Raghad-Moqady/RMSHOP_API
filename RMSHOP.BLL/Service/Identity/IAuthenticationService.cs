@@ -21,5 +21,8 @@ namespace RMSHOP.BLL.Service.Identity
 
         //Send Code
         Task<SendCodeResponse> SendCodeAsync(SendCodeRequest request);
+
+        //Reset Password
+        Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordRequest request);
     }
 }

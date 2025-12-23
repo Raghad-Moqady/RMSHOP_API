@@ -70,6 +70,22 @@
   },
   {
     "ContainingType": "RMSHOP.PL.Areas.Identity.AccountController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/auth/Account/ResetPassword",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "RMSHOP.DAL.DTO.Request.ResetPasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RMSHOP.PL.Areas.Identity.AccountController",
     "Method": "SendCode",
     "RelativePath": "api/auth/Account/SendCode",
     "HttpMethod": "POST",

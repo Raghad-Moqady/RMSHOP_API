@@ -243,5 +243,81 @@ namespace RMSHOP.BLL.Service.Identity
                 Message = "Code sent successfully to your email"
             };
         }
+
+
+        //Reset Password
+        public async Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordRequest request)
+        {
+            //Check Email
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user is null)
+            {
+                //400
+                return new ResetPasswordResponse()
+                {
+                    Success = false,
+                    Message = "Email Not Found"
+                };
+            }
+            // Check Code 
+            //1.
+            if (user.CodeResetPassword != request.Code)
+            {
+                //400
+                return new ResetPasswordResponse()
+                {
+                    Success = false,
+                    Message = "Invalid Code"
+                };
+            }
+            //2.
+            if(user.PasswordResetCodeExpiry< DateTime.UtcNow)
+            {
+                //400
+                return new ResetPasswordResponse()
+                {
+                    Success = false,
+                    Message = "Sorry! Code Expired "
+                };
+            }
+            
+            // update user with new password
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user,token,request.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                //400
+                return new ResetPasswordResponse()
+                {
+                    Success = false,
+                    Message = "Reset Password Failed ",
+                    Errors = result.Errors.Select(e => e.Description).ToList()
+                };
+            }
+
+            //send email
+            await _emailSender.SendEmailAsync(request.Email,"KidZone Store – Password Updated",
+                $@"
+                <div style='text-align:center; font-family: Arial, sans-serif;'>
+                  <h1 style='color:orange;'>Password Updated Successfully</h1>
+                  <p>Hello {user.UserName},</p>
+                  <p>Your password for <strong>KidZone Store</strong> has been changed successfully.</p>
+                  <p>If you did not make this change, please contact our support team immediately.</p>
+                  <p style='margin-top:20px; font-size:12px; color:gray;'>
+                    Thank you for using KidZone Store.
+                  </p>
+                </div>
+                "
+                );
+
+            //200
+            return new ResetPasswordResponse()
+            {
+                Success = true,
+                Message = "Password Reset Successfully",
+            };
+
+        }
     }
 }
