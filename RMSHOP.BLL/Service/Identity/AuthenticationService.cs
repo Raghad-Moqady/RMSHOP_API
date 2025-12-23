@@ -197,5 +197,51 @@ namespace RMSHOP.BLL.Service.Identity
             if(!result.Succeeded) return "Email confirmation failed";
             return "Email confirmed successfully"; 
         }
+
+        //Send Code 
+        public  async Task<SendCodeResponse> SendCodeAsync(SendCodeRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if(user is null)
+            {
+                return new SendCodeResponse()
+                {
+                    Success=false,
+                    Message="Email Not Found"
+                };
+            }
+            //create random code
+            var random= new Random();
+            var code = random.Next(1000,9999).ToString();
+
+            //store the code in DB
+            user.CodeResetPassword = code;
+            user.PasswordResetCodeExpiry = DateTime.UtcNow.AddMinutes(15);
+            await _userManager.UpdateAsync(user);
+
+            //send email with this code
+            await _emailSender.SendEmailAsync(request.Email, "Reset Password",
+                 $@"
+                    <div style='text-align:center; font-family: Arial, sans-serif;'>
+                      <h1 style='color:orange;'>Reset Your Password</h1>
+                      <p>Hello {user.UserName},</p>
+                      <p>Use the verification code below to reset your password for <strong>KidZone Store</strong>:</p>
+
+                      <div style='font-size:24px; font-weight:bold; letter-spacing:4px; margin:20px 0; color:#333;'>
+                        {code}
+                      </div>
+
+                      <p style='font-size:14px; color:gray;'>
+                        This code will expire soon. If you did not request a password reset, please ignore this email.
+                      </p>
+                    </div>
+                    ");
+
+            return new SendCodeResponse()
+            {
+                Success = true,
+                Message = "Code sent successfully to your email"
+            };
+        }
     }
 }

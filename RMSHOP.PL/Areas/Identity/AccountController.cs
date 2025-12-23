@@ -56,7 +56,19 @@ namespace RMSHOP.PL.Areas.Identity
             var response=await _authenticationService.ConfirmEmailAsync(token, userId);
             return Ok(new {message= response});
         }
-         
+
+        [HttpPost("SendCode")]
+        public async Task<IActionResult> SendCode(SendCodeRequest request)
+        {
+            var response = await _authenticationService.SendCodeAsync(request);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
     }
 }
 

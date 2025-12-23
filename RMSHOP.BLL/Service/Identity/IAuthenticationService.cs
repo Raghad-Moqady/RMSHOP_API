@@ -18,5 +18,8 @@ namespace RMSHOP.BLL.Service.Identity
 
         //Confirm Email
         Task<string> ConfirmEmailAsync(string token, string userId);
+
+        //Send Code
+        Task<SendCodeResponse> SendCodeAsync(SendCodeRequest request);
     }
 }

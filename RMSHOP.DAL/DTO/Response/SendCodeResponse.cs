@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RMSHOP.DAL.DTO.Response
 {
-    public class RegisterResponse: BaseResponse
+    public class SendCodeResponse: BaseResponse
     {
 
     }
