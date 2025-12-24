@@ -1,22 +1,16 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using RMSHOP.BLL.Service;
-using RMSHOP.BLL.Service.Categories;
-using RMSHOP.BLL.Service.Identity;
 using RMSHOP.DAL.Data;
 using RMSHOP.DAL.Models;
-using RMSHOP.DAL.Repository.Categories;
 using RMSHOP.DAL.Utils;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace RMSHOP.PL
 {
@@ -84,39 +78,7 @@ namespace RMSHOP.PL
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!))
                 };
             });
-
-            //To be able to execute a test and send a token with the request using Swagger
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "RMSHOP API", Version = "v1" });
-
-                c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-                {
-                    Name = "Authorization",
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                    Description = "Enter: Bearer {your token}"
-                });
-
-                c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
-                    {
-                        {
-                            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-                            {
-                                Reference = new Microsoft.OpenApi.Models.OpenApiReference
-                                {
-                                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                }
-                            },
-                            new string[] {}
-                        }
-                    });
-            }
-            );
-
+ 
             const string defaultCulture = "en";
 
             var supportedCultures = new[]
@@ -143,21 +105,8 @@ namespace RMSHOP.PL
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
-            // ICategoeryRepository dependency Injection
-            builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
-            // ICategoryService dependency Injection
-            builder.Services.AddScoped<ICategoryService,CategoryService>();
-            //SeedData
-            builder.Services.AddScoped<ISeedData, RoleSeedData>();
-            builder.Services.AddScoped<ISeedData, UserSeedData>();
-
-            //Authentication
-            builder.Services.AddScoped<IAuthenticationService,AuthenticationService>();
-
-            //To send emails
-            builder.Services.AddTransient<IEmailSender, EmailSender>();
-
+            //App Configurations (contain all Services)
+            AppConfiguration.Config(builder.Services); 
 
             var app = builder.Build();
 
