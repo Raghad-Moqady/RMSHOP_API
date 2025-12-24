@@ -5,6 +5,7 @@ using Microsoft.Extensions.Localization;
 using RMSHOP.BLL.Service.Categories;
 using RMSHOP.DAL.DTO.Request;
 using RMSHOP.PL.Resources;
+using System.Security.Claims;
 
 namespace RMSHOP.PL.Areas.Admin
 {
@@ -23,7 +24,11 @@ namespace RMSHOP.PL.Areas.Admin
         [HttpPost("")]
         public IActionResult Create(CategoryRequest request)
         {
-            var response= _categoryService.CreateCategory(request);
+            var createdBy= User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //Console.WriteLine("user id");
+            //Console.WriteLine(createdBy);
+
+            var response= _categoryService.CreateCategory(request,createdBy);
             return Ok(new {message= _localizer["Success"].Value ,category= response});
         }
     }
