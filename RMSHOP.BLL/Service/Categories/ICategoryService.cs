@@ -12,6 +12,6 @@ namespace RMSHOP.BLL.Service.Categories
     public interface ICategoryService
     {
         List<CategoryResponse> GetAllCategories ();
-        CategoryResponse CreateCategory(CategoryRequest category, string createdBy);
+        CategoryResponse CreateCategory(CategoryRequest category);
     }
 }

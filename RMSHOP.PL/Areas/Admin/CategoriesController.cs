@@ -24,11 +24,7 @@ namespace RMSHOP.PL.Areas.Admin
         [HttpPost("")]
         public IActionResult Create(CategoryRequest request)
         {
-            var createdBy= User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //Console.WriteLine("user id");
-            //Console.WriteLine(createdBy);
-
-            var response= _categoryService.CreateCategory(request,createdBy);
+             var response= _categoryService.CreateCategory(request);
             return Ok(new {message= _localizer["Success"].Value ,category= response});
         }
     }

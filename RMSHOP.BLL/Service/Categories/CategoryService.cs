@@ -24,12 +24,10 @@ namespace RMSHOP.BLL.Service.Categories
             var categories = _categoryRepository.GetAll();
             return categories.Adapt<List<CategoryResponse>>();
          }
-        public CategoryResponse CreateCategory(CategoryRequest request, string createdBy)
+        public CategoryResponse CreateCategory(CategoryRequest request)
         {
             var category = request.Adapt<Category>();
-            category.CreatedBy = createdBy;
             var response = _categoryRepository.Create(category);
-
             return response.Adapt<CategoryResponse>();
          }
 
