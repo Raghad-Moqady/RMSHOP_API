@@ -11,6 +11,8 @@ namespace RMSHOP.DAL.Repository.Categories
     {
         List<Category> GetAll();
         Category Create(Category category);
-
+        Task<Category?> FindByIdAsync(int id);
+        Task DeleteCategoryAsync(Category category);
+         
     }
 }

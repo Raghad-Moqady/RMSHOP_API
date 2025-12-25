@@ -29,5 +29,17 @@ namespace RMSHOP.DAL.Repository.Categories
             return category;
         }
 
+        public async Task<Category?> FindByIdAsync(int id)
+        {
+            return await _context.Categories.Include(c=> c.Translations)
+                   .FirstOrDefaultAsync(c => c.Id == id);
+        } 
+
+        //hard delete
+        public async Task DeleteCategoryAsync(Category category)
+        {
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -53,6 +53,7 @@ namespace RMSHOP.DAL.Data
                     entityEntry.Property(x => x.UpdatedBy).CurrentValue = currentUserId;
                     entityEntry.Property(x => x.UpdatedAt).CurrentValue = DateTime.UtcNow;
                 }
+                //Soft Delete
             }
             return base.SaveChanges();
         }

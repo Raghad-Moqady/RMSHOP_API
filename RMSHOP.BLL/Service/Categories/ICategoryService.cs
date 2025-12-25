@@ -11,7 +11,13 @@ namespace RMSHOP.BLL.Service.Categories
 {
     public interface ICategoryService
     {
+        //Get All
         List<CategoryResponse> GetAllCategories ();
+
+        //Create
         CategoryResponse CreateCategory(CategoryRequest category);
+
+        //Delete
+        Task<BaseResponse> DeleteCategoryAsync(int id);
     }
 }

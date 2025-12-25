@@ -31,5 +31,40 @@ namespace RMSHOP.BLL.Service.Categories
             return response.Adapt<CategoryResponse>();
          }
 
+        public async Task<BaseResponse> DeleteCategoryAsync(int id)
+        {
+            try
+            {
+                var category = await _categoryRepository.FindByIdAsync(id);
+                if (category is null)
+                {
+                    //404
+                    return new BaseResponse()
+                    {
+                        Success = false,
+                        Message= "Category Not Found",
+                    };
+                }
+                await _categoryRepository.DeleteCategoryAsync(category);
+                //200
+                return new BaseResponse()
+                {
+                    Success = true,
+                    Message = "Category Deleted Successfully"
+                };
+            }
+            catch (Exception ex)
+            {
+                //500
+                return new BaseResponse()
+                {
+                    Success = false,
+                    UnexpectedErrorFlag = true,
+                    Message = "Unexpected Error!",
+                    Errors= new List<string> { ex.Message }
+                };
+
+            } 
+        }
     }
 }
