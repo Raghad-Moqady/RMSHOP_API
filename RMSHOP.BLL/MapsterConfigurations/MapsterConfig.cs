@@ -13,8 +13,8 @@ namespace RMSHOP.BLL.MapsterConfigurations
     {
         public static void MapsterConfigRegister() 
         {
-            TypeAdapterConfig<Category, CategoryResponse>.NewConfig()
-                  .Map(dest => dest.CategoryId, source => source.Id).TwoWays();
+            //TypeAdapterConfig<Category, CategoryResponse>.NewConfig()
+            //      .Map(dest => dest.CategoryId, source => source.Id).TwoWays();
 
             TypeAdapterConfig<Category,CategoryResponse>.NewConfig()
                 .Map(dest=> dest.CreatedByUserName, source=> source.User.UserName);

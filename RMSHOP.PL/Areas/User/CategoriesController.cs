@@ -22,8 +22,8 @@ namespace RMSHOP.PL.Areas.User
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Index() {
-            var response =await _categoryService.GetAllCategoriesAsync();
+        public async Task<IActionResult> Index([FromQuery] string lang ="en") {
+            var response =await _categoryService.GetAllCategoriesAsync(lang);
             return Ok(new { message = _localizer["Success"].Value,categories=response});
         }
     }

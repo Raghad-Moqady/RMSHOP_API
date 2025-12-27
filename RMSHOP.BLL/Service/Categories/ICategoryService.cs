@@ -13,7 +13,7 @@ namespace RMSHOP.BLL.Service.Categories
     public interface ICategoryService
     {
         //Get All
-        Task<List<CategoryResponse>> GetAllCategoriesAsync();
+        Task<List<CategoryResponse>> GetAllCategoriesAsync(string lang);
 
         //Create
         Task<CategoryResponse> CreateCategoryAsync(CategoryRequest request);

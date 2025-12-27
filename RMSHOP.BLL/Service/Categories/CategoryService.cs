@@ -19,9 +19,16 @@ namespace RMSHOP.BLL.Service.Categories
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<List<CategoryResponse>> GetAllCategoriesAsync()
+        public async Task<List<CategoryResponse>> GetAllCategoriesAsync(string lang)
         {
             var categories =await _categoryRepository.GetAllCategoriesAsync();
+
+            foreach (var category in categories)
+            {
+                var result = category.Translations.Where(t=>t.Language==lang).ToList();
+                category.Translations = result;
+            }
+
             return categories.Adapt<List<CategoryResponse>>();
         }
         public async Task<CategoryResponse> CreateCategoryAsync(CategoryRequest request)
