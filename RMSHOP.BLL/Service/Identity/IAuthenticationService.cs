@@ -1,5 +1,5 @@
-﻿using RMSHOP.DAL.DTO.Request;
-using RMSHOP.DAL.DTO.Response;
+﻿using RMSHOP.DAL.DTO.Request.Identity;
+using RMSHOP.DAL.DTO.Response.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

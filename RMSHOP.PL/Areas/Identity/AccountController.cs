@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RMSHOP.BLL.Service.Identity;
-using RMSHOP.DAL.DTO.Request;
+using RMSHOP.DAL.DTO.Request.Identity;
 using System.Threading.Tasks;
 
 namespace RMSHOP.PL.Areas.Identity

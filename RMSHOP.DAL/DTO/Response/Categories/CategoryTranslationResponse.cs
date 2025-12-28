@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RMSHOP.DAL.DTO.Request
+namespace RMSHOP.DAL.DTO.Response.Categories
 {
-    public class CategoryTranslationRequest
+    public class CategoryTranslationResponse
     {
         public string Name { get; set; }
         public string Language { get; set; }

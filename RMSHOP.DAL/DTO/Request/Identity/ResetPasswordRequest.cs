@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RMSHOP.DAL.DTO.Request
+namespace RMSHOP.DAL.DTO.Request.Identity
 {
     public class ResetPasswordRequest
     {

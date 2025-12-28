@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
-using RMSHOP.DAL.DTO.Request;
+using RMSHOP.DAL.DTO.Request.categories;
 using RMSHOP.DAL.DTO.Response;
+using RMSHOP.DAL.DTO.Response.Categories;
 using RMSHOP.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -12,22 +13,25 @@ namespace RMSHOP.BLL.Service.Categories
 {
     public interface ICategoryService
     {
-        //Get All
-        Task<List<CategoryResponse>> GetAllCategoriesAsync(string lang);
+        //Get All For User : 
+        Task<List<CategoryResponseForUser>> GetAllCategoriesForUsersAsync(string lang);
 
-        //Create
-        Task<CategoryResponse> CreateCategoryAsync(CategoryRequest request);
+        //Get All For Admin :
+        Task<List<CategoryResponseForAdmin>>GetAllCategoriesForAdminAsync();
 
-        //Delete
+        //Create :Admin
+        Task<CategoryResponseForAdmin> CreateCategoryAsync(CategoryRequest request);
+
+        //Delete: Admin
         Task<BaseResponse> DeleteCategoryAsync(int id);
 
-        //Update (Put way)
+        //Update (Put way) :Admin
         Task<BaseResponse> UpdateCategoryPutAsync(int id,CategoryRequest request);
 
-        //Update (Patch way)
+        //Update (Patch way) :Admin
         Task<BaseResponse> UpdateCategoryPatchAsync(int id, CategoryRequest request);
 
-        //Toggle Status
+        //Toggle Status :Admin
         Task<BaseResponse> ToggleStatusAsync(int id);
 
     }

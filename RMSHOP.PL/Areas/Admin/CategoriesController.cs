@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using RMSHOP.BLL.Service.Categories;
-using RMSHOP.DAL.DTO.Request;
+using RMSHOP.DAL.DTO.Request.categories;
 using RMSHOP.PL.Resources;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -22,6 +22,15 @@ namespace RMSHOP.PL.Areas.Admin
             _categoryService = categoryService;
             _localizer = localizer;
         }
+
+
+        [HttpGet("")]
+        public async Task<IActionResult> Index()
+        {
+            var response = await _categoryService.GetAllCategoriesForAdminAsync();
+            return Ok(new { message = _localizer["Success"].Value, categories = response });
+        }
+
 
         [HttpPost("")]
         public async Task<IActionResult> Create(CategoryRequest request)

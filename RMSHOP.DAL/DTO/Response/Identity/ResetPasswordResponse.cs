@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RMSHOP.DAL.DTO.Response
+namespace RMSHOP.DAL.DTO.Response.Identity
 {
-    public class SendCodeResponse: BaseResponse
+    public class ResetPasswordResponse: BaseResponse
     {
-
     }
 }

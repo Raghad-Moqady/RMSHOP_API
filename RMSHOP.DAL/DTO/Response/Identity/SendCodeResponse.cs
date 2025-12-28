@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RMSHOP.DAL.DTO.Request
+namespace RMSHOP.DAL.DTO.Response.Identity
 {
-    public class SendCodeRequest
+    public class SendCodeResponse: BaseResponse
     {
-        public string Email { get; set; }
+
     }
 }

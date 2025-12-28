@@ -4,15 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RMSHOP.DAL.DTO.Request
+namespace RMSHOP.DAL.DTO.Request.Identity
 {
-    public class RegisterRequest
+    public class LoginRequest
     {
-        public string FullName { get; set; }
-        public string UserName { get; set; }
-        public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-
     }
 }

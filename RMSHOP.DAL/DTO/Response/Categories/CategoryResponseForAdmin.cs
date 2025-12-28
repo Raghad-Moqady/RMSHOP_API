@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RMSHOP.DAL.DTO.Response
+namespace RMSHOP.DAL.DTO.Response.Categories
 {
-    public class CategoryResponse
+    public class CategoryResponseForAdmin
     {
         public int Id { get; set; }
         public Status Status { get; set; }

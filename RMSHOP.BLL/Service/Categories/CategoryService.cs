@@ -1,6 +1,7 @@
 ﻿using Mapster;
-using RMSHOP.DAL.DTO.Request;
+using RMSHOP.DAL.DTO.Request.categories;
 using RMSHOP.DAL.DTO.Response;
+using RMSHOP.DAL.DTO.Response.Categories;
 using RMSHOP.DAL.Models;
 using RMSHOP.DAL.Repository.Categories;
 using System;
@@ -19,23 +20,39 @@ namespace RMSHOP.BLL.Service.Categories
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<List<CategoryResponse>> GetAllCategoriesAsync(string lang)
+        //for user
+        public async Task<List<CategoryResponseForUser>> GetAllCategoriesForUsersAsync(string lang)
         {
             var categories =await _categoryRepository.GetAllCategoriesAsync();
 
-            foreach (var category in categories)
-            {
-                var result = category.Translations.Where(t=>t.Language==lang).ToList();
-                category.Translations = result;
-            }
+            //way1 : manual mapping
+            //var filteredCategories = categories.Select(c => new CategoryResponseForUser()
+            //{
+            //    Id = c.Id,
+            //    //Name = c.Translations.Where(t => t.Language == lang).FirstOrDefault().Name
+            //    //or
+            //    //Name = c.Translations.Where(t => t.Language == lang).Select(t=>t.Name).FirstOrDefault()
 
-            return categories.Adapt<List<CategoryResponse>>();
+            //}).ToList();
+            //return filteredCategories;
+
+            //way2 : using mapster config
+            var filteredCategories= categories.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<CategoryResponseForUser>>();
+            return filteredCategories;
         }
-        public async Task<CategoryResponse> CreateCategoryAsync(CategoryRequest request)
+
+        //for admin
+        public async Task<List<CategoryResponseForAdmin>> GetAllCategoriesForAdminAsync()
+        {
+            var categories = await _categoryRepository.GetAllCategoriesAsync();
+            return categories.Adapt<List<CategoryResponseForAdmin>>();
+        }
+
+        public async Task<CategoryResponseForAdmin> CreateCategoryAsync(CategoryRequest request)
         {
             var category = request.Adapt<Category>();
             var response =await _categoryRepository.CreateCategoryAsync(category);
-            return response.Adapt<CategoryResponse>();
+            return response.Adapt<CategoryResponseForAdmin>();
          }
 
         public async Task<BaseResponse> UpdateCategoryPutAsync(int id, CategoryRequest request)
@@ -215,5 +232,7 @@ namespace RMSHOP.BLL.Service.Categories
 
             }
         }
+
+       
     }
 }
