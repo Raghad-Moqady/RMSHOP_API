@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RMSHOP.DAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf97c61546aec9cbff78ba44ed8903583512375f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+158ca8cf16052169571977a6cc2dfbb50cbd4d49")]
 [assembly: System.Reflection.AssemblyProductAttribute("RMSHOP.DAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RMSHOP.DAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

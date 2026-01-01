@@ -26,7 +26,7 @@ namespace RMSHOP.DAL.Repository.Categories
         {
             await _context.AddAsync(category);
             await _context.SaveChangesAsync();
-            return category;
+            return _context.Categories.Include(c=>c.User).FirstOrDefault(c=>c.Id==category.Id);
         }
 
         public async Task<Category?> FindByIdAsync(int id)

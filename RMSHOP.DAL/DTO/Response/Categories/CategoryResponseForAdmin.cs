@@ -20,7 +20,7 @@ namespace RMSHOP.DAL.DTO.Response.Categories
 
         //way2 using mapster config
         public string CreatedByUserName { get; set; }
-        
+
         public List<CategoryTranslationResponse> Translations { get; set; }
 
     }

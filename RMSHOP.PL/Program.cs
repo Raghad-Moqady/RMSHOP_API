@@ -112,6 +112,10 @@ namespace RMSHOP.PL
             //Mapster Configurations
             MapsterConfig.MapsterConfigRegister();
 
+            //audit
+            //builder.Services.AddHttpContextAccessor();
+
+
             var app = builder.Build();
 
             //Localization

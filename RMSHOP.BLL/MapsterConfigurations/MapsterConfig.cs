@@ -16,8 +16,9 @@ namespace RMSHOP.BLL.MapsterConfigurations
             //TypeAdapterConfig<Category, CategoryResponse>.NewConfig()
             //      .Map(dest => dest.CategoryId, source => source.Id).TwoWays();
 
-            TypeAdapterConfig<Category,CategoryResponseForAdmin>.NewConfig()
-                .Map(dest=> dest.CreatedByUserName, source=> source.User.UserName);
+            TypeAdapterConfig<Category, CategoryResponseForAdmin>.NewConfig()
+                .Map(dest => dest.CreatedByUserName, source => source.User.UserName);
+
 
             TypeAdapterConfig<Category, CategoryResponseForUser>.NewConfig()
                 .Map(dest => dest.Name, source=> source.Translations

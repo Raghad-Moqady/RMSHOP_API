@@ -113,10 +113,10 @@ namespace RMSHOP.BLL.Service.Categories
                         var existing = category.Translations.FirstOrDefault(t=> t.Language== translation.Language);
                         if(existing is not null)
                         {
-                            if(existing.Name!= translation.Name)
-                            {
+                            //if(existing.Name!= translation.Name)
+                            //{
                                 existing.Name = translation.Name;
-                            }
+                            //}
                         }
                         else
                         {

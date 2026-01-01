@@ -79,7 +79,6 @@ C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\RMSHOP.PL.csproj.Up2Date
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\RMSHOP.PL.dll
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\refint\RMSHOP.PL.dll
@@ -184,3 +183,4 @@ C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\LENOVO\Desktop\BackendNew2025_R12\API\RMSHOP\RMSHOP.PL\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
