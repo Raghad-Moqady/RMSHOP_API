@@ -18,6 +18,9 @@ namespace RMSHOP.DAL.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTranslation> CategoriesTranslation { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductTranslation> ProductTranslations { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor)
         :base(options)
         {
@@ -35,6 +38,13 @@ namespace RMSHOP.DAL.Data
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens"); 
+
+            //to solve multiple cascade path issue (in EF)
+            builder.Entity<Category>()
+            .HasOne(c=> c.User)
+            .WithMany()
+            .HasForeignKey(c=>c.CreatedBy)
+            .OnDelete(DeleteBehavior.NoAction);
         }
 
         // audit
