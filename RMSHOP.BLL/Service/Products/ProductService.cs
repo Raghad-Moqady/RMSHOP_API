@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using RMSHOP.DAL.DTO.Request.Products;
+using RMSHOP.DAL.DTO.Response.Categories;
 using RMSHOP.DAL.DTO.Response.Products;
 using RMSHOP.DAL.Models;
 using RMSHOP.DAL.Repository.Products;
@@ -50,6 +51,12 @@ namespace RMSHOP.BLL.Service.Products
         {
              var response= await _productRepository.GetAllAsync();
              return response.Adapt<List<ProductResponse>>();
+        }
+
+        public async Task<List<ProductUserResponse>> GetAllForUserAsync(string lang)
+        {
+            var products = await _productRepository.GetAllForUserAsync();
+            return products.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
         }
     }
 }

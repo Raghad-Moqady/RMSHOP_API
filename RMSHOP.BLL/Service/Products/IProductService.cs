@@ -10,7 +10,10 @@ namespace RMSHOP.BLL.Service.Products
 {
     public interface IProductService
     {
+        //for Admin 
         Task<ProductResponse> CreateProductAsync(ProductRequest request);
         Task<List<ProductResponse>> GetAllAsync();
+        //for user
+        Task<List<ProductUserResponse>> GetAllForUserAsync(string lang);
     }
 }

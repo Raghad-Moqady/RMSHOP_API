@@ -11,5 +11,6 @@ namespace RMSHOP.DAL.Repository.Products
     {
         Task<Product> CreateProductAsync(Product product);
         Task<List<Product>> GetAllAsync();
+        Task<List<Product>> GetAllForUserAsync();
     }
 }
