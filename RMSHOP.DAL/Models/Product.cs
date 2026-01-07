@@ -19,6 +19,7 @@ namespace RMSHOP.DAL.Models
 
         public List<ProductTranslation> Translations { get; set; }
 
+        public List<ProductSubImage> SubImages { get; set; }
 
     }
 }

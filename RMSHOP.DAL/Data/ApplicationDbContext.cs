@@ -20,6 +20,7 @@ namespace RMSHOP.DAL.Data
         public DbSet<CategoryTranslation> CategoriesTranslation { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
+        public DbSet<ProductSubImage> ProductSubImages { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor)
         :base(options)
