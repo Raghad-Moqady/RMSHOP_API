@@ -292,5 +292,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RMSHOP.PL.Areas.User.ProductsController",
+    "Method": "GetAllProductsByCategoryForUser",
+    "RelativePath": "api/Products/category/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "lang",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

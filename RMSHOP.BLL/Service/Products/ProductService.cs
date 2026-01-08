@@ -53,6 +53,12 @@ namespace RMSHOP.BLL.Service.Products
              return response.Adapt<List<ProductResponse>>();
         }
 
+
+        public async Task<List<ProductUserResponse>> GetAllProductsByCategoryForUserAsync(int categoryId, string lang)
+        {
+            var filteredProducts = await _productRepository.GetAllProductsByCategoryForUserAsync(categoryId);
+            return filteredProducts.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
+        }
         public async Task<List<ProductUserResponse>> GetAllForUserAsync(string lang)
         {
             var products = await _productRepository.GetAllForUserAsync();

@@ -19,6 +19,14 @@ namespace RMSHOP.PL.Areas.User
             _localizer = localizer;
         }
 
+        [HttpGet("category/{id}")]
+        public async Task<IActionResult> GetAllProductsByCategoryForUser([FromRoute] int id,[FromQuery] string lang="en")
+        {
+            var response= await _productService.GetAllProductsByCategoryForUserAsync(id,lang);
+            return Ok(new { message = _localizer["Success"].Value, products=response });
+        }
+
+
         [HttpGet("")]
         public async Task<IActionResult> Index([FromQuery] string lang="en")
         {
@@ -32,5 +40,7 @@ namespace RMSHOP.PL.Areas.User
             var response= await _productService.GetProductDetailsForUserAsync(id, lang);
             return Ok(new {message = _localizer["Success"].Value, product = response});
         }
+
+       
     }
 }

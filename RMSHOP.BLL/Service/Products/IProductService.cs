@@ -14,7 +14,9 @@ namespace RMSHOP.BLL.Service.Products
         Task<ProductResponse> CreateProductAsync(ProductRequest request);
         Task<List<ProductResponse>> GetAllAsync();
         //for user
+        Task<List<ProductUserResponse>> GetAllProductsByCategoryForUserAsync(int categoryId, string lang);
         Task<List<ProductUserResponse>> GetAllForUserAsync(string lang);
         Task<ProductDetailsForUserResponse> GetProductDetailsForUserAsync(int id, string lang);
+
     }
 }
