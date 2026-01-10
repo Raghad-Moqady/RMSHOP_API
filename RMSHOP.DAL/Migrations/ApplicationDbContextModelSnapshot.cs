@@ -251,7 +251,7 @@ namespace RMSHOP.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("RMSHOP.DAL.Models.category.Category", b =>
@@ -282,7 +282,7 @@ namespace RMSHOP.DAL.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("RMSHOP.DAL.Models.category.CategoryTranslation", b =>
@@ -308,7 +308,7 @@ namespace RMSHOP.DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("CategoriesTranslation");
+                    b.ToTable("CategoriesTranslation", (string)null);
                 });
 
             modelBuilder.Entity("RMSHOP.DAL.Models.product.Product", b =>
@@ -360,7 +360,7 @@ namespace RMSHOP.DAL.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("RMSHOP.DAL.Models.product.ProductSubImage", b =>
@@ -375,7 +375,7 @@ namespace RMSHOP.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductSubImages");
+                    b.ToTable("ProductSubImages", (string)null);
                 });
 
             modelBuilder.Entity("RMSHOP.DAL.Models.product.ProductTranslation", b =>
@@ -405,7 +405,7 @@ namespace RMSHOP.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductTranslations");
+                    b.ToTable("ProductTranslations", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
