@@ -100,6 +100,7 @@ namespace RMSHOP.BLL.Service.Carts
             
         }
 
+
         public async Task<CartSummaryResponse> GetCartSummaryForUserAsync(string userId ,string lang)
         {
             //1. from Cart : (filter by user Id)
@@ -110,6 +111,17 @@ namespace RMSHOP.BLL.Service.Carts
                  CartProducts = cartProducts,
             };
             return cartSummary;
+        }
+
+        public async Task<BaseResponse> ClearCartAsync(string userId)
+        {
+            await _cartRepository.ClearCartAsync(userId);
+            //200
+            return new BaseResponse()
+            {
+                Success = true,
+                Message = "Cart Cleared Successfully"
+            };
         }
     }
 }

@@ -45,5 +45,12 @@ namespace RMSHOP.DAL.Repository.Carts
                 .Include (c=>c.Product.Category.Translations)
                 .ToListAsync();
         }
+
+        public async Task ClearCartAsync(string userId)
+        {
+            var cartItems= await _context.Carts.Where(c=>c.UserId == userId).ToListAsync();
+            _context.Carts.RemoveRange(cartItems);
+            await _context.SaveChangesAsync();
+        }
     }
 }

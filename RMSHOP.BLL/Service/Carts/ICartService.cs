@@ -13,5 +13,6 @@ namespace RMSHOP.BLL.Service.Carts
     {
         Task<BaseResponse> AddToCartAsync(string userId, AddToCartRequest request);
         Task<CartSummaryResponse> GetCartSummaryForUserAsync(string userId,string lang);
+        Task<BaseResponse> ClearCartAsync(string userId);
     }
 }

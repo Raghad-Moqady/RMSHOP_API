@@ -55,6 +55,14 @@ namespace RMSHOP.PL.Areas.User
             return Ok(response);
         }
 
+        [HttpDelete("clear")]
+        public async Task<IActionResult> ClearCart()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response= await _cartService.ClearCartAsync(userId);
+            return Ok(response);
+        }
+
 
 
     }
