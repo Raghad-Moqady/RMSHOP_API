@@ -2,6 +2,7 @@
 using RMSHOP.BLL.Service;
 using RMSHOP.BLL.Service.Carts;
 using RMSHOP.BLL.Service.Categories;
+using RMSHOP.BLL.Service.Checkout;
 using RMSHOP.BLL.Service.Identity;
 using RMSHOP.BLL.Service.Products;
 using RMSHOP.DAL.Repository.Carts;
@@ -35,6 +36,8 @@ namespace RMSHOP.PL
             Services.AddScoped<ICartService, CartService>();
             Services.AddScoped<ICartRepository, CartRepository>();
 
+            //Checkout
+            Services.AddScoped<ICheckoutService, CheckoutService>();
 
 
         }

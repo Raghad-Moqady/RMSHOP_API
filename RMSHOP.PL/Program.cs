@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using RMSHOP.BLL;
 using RMSHOP.BLL.MapsterConfigurations;
 using RMSHOP.DAL.Data;
 using RMSHOP.DAL.Models;
 using RMSHOP.DAL.Utils;
+using Stripe;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +43,7 @@ namespace RMSHOP.PL
             //way3 to connect with database using dependency Injection way
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+             
 
             // Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -115,6 +118,9 @@ namespace RMSHOP.PL
             //audit
             //builder.Services.AddHttpContextAccessor();
 
+            // Configure Stripe settings
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
             var app = builder.Build();
 
