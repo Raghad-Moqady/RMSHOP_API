@@ -44,7 +44,7 @@ namespace RMSHOP.DAL.Repository.Categories
 
         public async Task UpdateCategoryAsync(Category category)
         {
-            _context.Update(category);
+            //_context.Update(category);
             await _context.SaveChangesAsync();
         }
  
