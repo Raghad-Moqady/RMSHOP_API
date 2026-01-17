@@ -23,8 +23,9 @@ namespace RMSHOP.BLL.Service.Checkout
             // 1. check :if user Cart is Empty or not
             // 2. if cart is not empty => check if each cartItem count is still available in stock or not 
             // 3. calculate Cart total again >> from user cart in DB , اضمن 
-            // 4. check PaymentMethod (visa or cash?)
-            // 5. بناء عليه رح يتم تحديد الرد المناسب وارساله للفرونت ليقوم بتحويل اليوزر على الصفحة المناسبة
+            // 4. Create Order
+            // 5. check PaymentMethod (visa or cash?)
+            // 6. بناء عليه رح يتم تحديد الرد المناسب وارساله للفرونت ليقوم بتحويل اليوزر على الصفحة المناسبة
             //////////////////////////////////
             
             //1:
@@ -54,7 +55,10 @@ namespace RMSHOP.BLL.Service.Checkout
                 }
                 cartTotal += cartItem.Count * cartItem.Product.Price;
             }
-            //4:
+            
+            //4. Create order 
+            
+            //5:
             if (request.PaymentMethod == "cash")
             {
                 return new CheckoutResponse
@@ -70,8 +74,12 @@ namespace RMSHOP.BLL.Service.Checkout
                     PaymentMethodTypes = new List<string> { "card" },
                     LineItems = new List<SessionLineItemOptions>(),
                     Mode = "payment",
-                    SuccessUrl = $"https://localhost:7281/checkout/success",
-                    CancelUrl = $"https://localhost:7281/checkout/cancel",
+                    SuccessUrl = $"https://localhost:7281/api/checkouts/success?session_id={{CHECKOUT_SESSION_ID}}",
+                    CancelUrl = $"https://localhost:7281/api/checkouts/cancel",
+                    Metadata= new Dictionary<string, string>
+                    {
+                        {"UserId", userId },
+                    }
                 };
                 foreach (var cartItem in cartItems)
                 {
@@ -80,7 +88,7 @@ namespace RMSHOP.BLL.Service.Checkout
                     {
                         PriceData = new SessionLineItemPriceDataOptions
                         {
-                            Currency = "USD",
+                            Currency = "USD",// eur
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
                                 Name = cartItem.Product.Translations.FirstOrDefault(t => t.Language == "en").Name,
