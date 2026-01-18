@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RMSHOP.DAL.Models.order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,6 @@ namespace RMSHOP.DAL.Models
         public string? RefreshToken { get; set; }
         public DateTime RefreshTokenExpiryTime { get; set; }
 
+        public List<Order> Orders { get; set; } 
     }
 }

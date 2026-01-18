@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RMSHOP.DAL.Models;
 using RMSHOP.DAL.Models.cart;
 using RMSHOP.DAL.Models.category;
+using RMSHOP.DAL.Models.order;
 using RMSHOP.DAL.Models.product;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,9 @@ namespace RMSHOP.DAL.Data
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
         public DbSet<ProductSubImage> ProductSubImages { get; set; }
         public DbSet<Cart> Carts { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor)
         :base(options)
@@ -56,6 +60,18 @@ namespace RMSHOP.DAL.Data
           .WithMany()
           .HasForeignKey(c => c.UserId)
           .OnDelete(DeleteBehavior.NoAction);
+
+          builder.Entity<Order>()
+         .HasOne(c => c.User)
+         .WithMany()
+         .HasForeignKey(c => c.UserId)
+         .OnDelete(DeleteBehavior.NoAction);
+
+         builder.Entity<Product>()
+         .HasOne(c => c.User)
+         .WithMany()
+         .HasForeignKey(c => c.CreatedBy)
+         .OnDelete(DeleteBehavior.NoAction);
         }
 
         // audit
