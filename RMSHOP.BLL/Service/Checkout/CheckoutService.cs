@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Mapster;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using RMSHOP.DAL.DTO.Request.Checkout;
+using RMSHOP.DAL.DTO.Response.Cart;
 using RMSHOP.DAL.DTO.Response.Checkout;
 using RMSHOP.DAL.Models;
 using RMSHOP.DAL.Models.order;
 using RMSHOP.DAL.Repository.Carts;
+using RMSHOP.DAL.Repository.OrderItems;
 using RMSHOP.DAL.Repository.Orders;
 using Stripe.Checkout;
 using System;
@@ -21,15 +24,18 @@ namespace RMSHOP.BLL.Service.Checkout
         private readonly IOrderRepository _orderRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IOrderItemRepository _orderItemRepository;
 
         public CheckoutService(ICartRepository cartRepository, IOrderRepository orderRepository,
             UserManager<ApplicationUser> userManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IOrderItemRepository orderItemRepository)
         {
             _cartRepository = cartRepository;
             _orderRepository = orderRepository;
             _userManager = userManager;
             _emailSender = emailSender;
+            _orderItemRepository = orderItemRepository;
         }
         public async Task<CheckoutResponse> CheckoutAsync(string userId, CheckoutRequest request)
         {
@@ -152,10 +158,38 @@ namespace RMSHOP.BLL.Service.Checkout
             order.PaymentId= session.PaymentIntentId;
             order.OrderStatus = OrderStatusEnum.Approved;
             await _orderRepository.UpdateAsync(order);
-
-            //send email to user 
+             
+            
             var user = await _userManager.FindByIdAsync(userId);
-           
+
+            //1.Transferring products from the user cart to orderItem table
+            //Remember that the order contain list of order items(products)
+
+            //ما زبطت لازم اتأكد منها :
+            //var cartItems = await _cartRepository.GetCartItemsForUserAsync(userId);
+            //var orderItems = cartItems.BuildAdapter().AddParameters("orderId", order.Id).AdaptToType<List<OrderItem>>();
+            //await _orderItemRepository.CreateRangeAsync(orderItems);
+
+            var cartItems = await _cartRepository.GetCartItemsForUserAsync(userId);
+            var orderItems =new List<OrderItem>();
+            foreach(var cartItem in cartItems)
+            {
+                var orderItem = new OrderItem()
+                {
+                     OrderId= order.Id,
+                     ProductId= cartItem.ProductId,
+                     Quantity= cartItem.Count,
+                     UnitPrice=cartItem.Product.Price,
+                     TotalPrice=cartItem.Product.Price * cartItem.Count,
+                };
+                orderItems.Add(orderItem);
+            }
+            //Solve N+1 problem by :
+            await _orderItemRepository.CreateRangeAsync(orderItems);
+
+            ////2.Clear Cart
+            await _cartRepository.ClearCartAsync(userId);
+            //3.Send email to user 
             await _emailSender.SendEmailAsync(user.Email, "Payment Successfully",
                 $@"
                      <div style='text-align:center; font-family: Arial, sans-serif;'>

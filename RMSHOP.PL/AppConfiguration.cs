@@ -8,6 +8,7 @@ using RMSHOP.BLL.Service.Products;
 using RMSHOP.BLL.Service.Token;
 using RMSHOP.DAL.Repository.Carts;
 using RMSHOP.DAL.Repository.Categories;
+using RMSHOP.DAL.Repository.OrderItems;
 using RMSHOP.DAL.Repository.Orders;
 using RMSHOP.DAL.Repository.Products;
 using RMSHOP.DAL.Utils;
@@ -46,6 +47,8 @@ namespace RMSHOP.PL
 
             //Order
             Services.AddScoped<IOrderRepository, OrderRepository>();
+            Services.AddScoped<IOrderItemRepository,OrderItemRepository>();
+
 
 
         }

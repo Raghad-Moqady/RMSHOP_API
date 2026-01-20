@@ -4,6 +4,7 @@ using RMSHOP.DAL.DTO.Response.Categories;
 using RMSHOP.DAL.DTO.Response.Products;
 using RMSHOP.DAL.Models.cart;
 using RMSHOP.DAL.Models.category;
+using RMSHOP.DAL.Models.order;
 using RMSHOP.DAL.Models.product;
 using System;
 using System.Collections.Generic;
@@ -71,6 +72,14 @@ namespace RMSHOP.BLL.MapsterConfigurations
                 .Map(dest=>dest.CategoryName, source=>source.Product.Category.Translations
                 .FirstOrDefault(t => t.Language == MapContext.Current.Parameters["lang"].ToString()).Name)
                 ;
+
+            //TypeAdapterConfig<Cart, OrderItem>.NewConfig()
+            //     .Map(dest=> dest.OrderId, source=> MapContext.Current.Parameters["orderId"].ToString())
+            //     .Map(dest => dest.ProductId, source => source.ProductId)
+            //     .Map(dest=> dest.Quantity, source=> source.Count)
+            //     .Map(dest => dest.UnitPrice, source => source.Product.Price)
+            //     .Map(dest => dest.TotalPrice, source => source.Count * source.Product.Price);
+
         }
 
     }
