@@ -60,14 +60,19 @@ namespace RMSHOP.BLL.Service.Products
             var filteredProducts = await _productRepository.GetAllProductsByCategoryForUserAsync(categoryId);
             return filteredProducts.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
         }
-        public async Task<List<ProductUserResponse>> GetAllForUserAsync(string lang, int page, int limit)
+        public async Task<List<ProductUserResponse>> GetAllForUserAsync(string lang, string search, int page, int limit)
         {
             //var products = await _productRepository.GetAllForUserAsync();
             //return products.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
 
             var query = _productRepository.Query();
-            //1.
-            var totalCount=await query.CountAsync();
+            //0.Search
+            if(search is not null)
+            {
+                query = query.Where(p => p.Translations.Any(t => t.Language == lang && (t.Name.Contains(search)||t.Description.Contains(search))));
+            };
+            //1.total Count
+            var totalCount =await query.CountAsync();
             //2. Pagination
             query= query.Skip((page - 1) * limit).Take(limit);
              

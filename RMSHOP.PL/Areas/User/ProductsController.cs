@@ -30,9 +30,10 @@ namespace RMSHOP.PL.Areas.User
         [HttpGet("")]
         public async Task<IActionResult> Index(
             [FromQuery] string lang = "en",
+            [FromQuery] string? search=null,
             [FromQuery] int page=1, [FromQuery] int limit=3)
         {
-            var response= await _productService.GetAllForUserAsync(lang,page,limit);
+            var response= await _productService.GetAllForUserAsync(lang, search ,page,limit);
             return Ok(new {message= _localizer["Success"].Value ,products=response });
         }
 
