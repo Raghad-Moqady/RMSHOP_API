@@ -34,7 +34,7 @@ namespace RMSHOP.PL.Areas.User
             [FromQuery] int page=1, [FromQuery] int limit=3)
         {
             var response= await _productService.GetAllForUserAsync(lang, search ,page,limit);
-            return Ok(new {message= _localizer["Success"].Value ,products=response });
+            return Ok(new {message= _localizer["Success"].Value ,response });
         }
 
         [HttpGet("{id}")]

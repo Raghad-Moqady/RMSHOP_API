@@ -1,4 +1,5 @@
 ﻿using RMSHOP.DAL.DTO.Request.Products;
+using RMSHOP.DAL.DTO.Response;
 using RMSHOP.DAL.DTO.Response.Products;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace RMSHOP.BLL.Service.Products
         Task<List<ProductResponse>> GetAllAsync();
         //for user
         Task<List<ProductUserResponse>> GetAllProductsByCategoryForUserAsync(int categoryId, string lang);
-        Task<List<ProductUserResponse>> GetAllForUserAsync(string lang, string search, int page, int limit);
+        Task<PaginatedResponse<ProductUserResponse>> GetAllForUserAsync(string lang, string search, int page, int limit);
         Task<ProductDetailsForUserResponse> GetProductDetailsForUserAsync(int id, string lang);
 
     }

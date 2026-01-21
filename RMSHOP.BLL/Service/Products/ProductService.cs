@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using Microsoft.EntityFrameworkCore;
 using RMSHOP.DAL.DTO.Request.Products;
+using RMSHOP.DAL.DTO.Response;
 using RMSHOP.DAL.DTO.Response.Categories;
 using RMSHOP.DAL.DTO.Response.Products;
 using RMSHOP.DAL.Models.product;
@@ -60,8 +61,9 @@ namespace RMSHOP.BLL.Service.Products
             var filteredProducts = await _productRepository.GetAllProductsByCategoryForUserAsync(categoryId);
             return filteredProducts.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
         }
-        public async Task<List<ProductUserResponse>> GetAllForUserAsync(string lang, string search, int page, int limit)
+        public async Task<PaginatedResponse<ProductUserResponse>> GetAllForUserAsync(string lang, string search, int page, int limit)
         {
+            //old code without pagination & sort &... so on :
             //var products = await _productRepository.GetAllForUserAsync();
             //return products.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
 
@@ -71,12 +73,22 @@ namespace RMSHOP.BLL.Service.Products
             {
                 query = query.Where(p => p.Translations.Any(t => t.Language == lang && (t.Name.Contains(search)||t.Description.Contains(search))));
             };
+
+
             //1.total Count
             var totalCount =await query.CountAsync();
             //2. Pagination
             query= query.Skip((page - 1) * limit).Take(limit);
              
-            return query.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
+            var response= query.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
+
+            return new PaginatedResponse<ProductUserResponse>()
+            {
+                 TotalCount = totalCount,
+                 Limit = limit,
+                 Page = page,
+                 Data= response
+            };
 
         }
 
