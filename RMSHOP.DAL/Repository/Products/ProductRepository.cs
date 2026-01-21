@@ -38,8 +38,7 @@ namespace RMSHOP.DAL.Repository.Products
         {
             return await _context.Products.Include(p=>p.User).Include(p=>p.Translations).Include(p=>p.SubImages).ToListAsync();
         }
-
-
+ 
         public async Task<List<Product>> GetAllProductsByCategoryForUserAsync(int categoryId)
         {
             return await _context.Products
@@ -54,15 +53,21 @@ namespace RMSHOP.DAL.Repository.Products
                 .Include(p => p.Translations)
                 .Include(p => p.Category.Translations).ToListAsync();
         }
-
-        public async Task<bool> DecreaseProductQuantityAsync(int productId, int quantity)
+        public IQueryable<Product> Query()
         {
-            var product= await _context.Products.FindAsync(productId);
-            
-            product.Quantity-=quantity;
-            await _context.SaveChangesAsync();
-            return true;
+            return  _context.Products
+              .Include(p => p.Translations)
+              .Include(p => p.Category.Translations).AsQueryable();
         }
+
+        //public async Task<bool> DecreaseProductQuantityAsync(int productId, int quantity)
+        //{
+        //    var product= await _context.Products.FindAsync(productId);
+
+        //    product.Quantity-=quantity;
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
 
         public async Task<bool> DecreaseProductsQuantityAsync(List<(int productId, int quantity)> productsToDecreaseQuantity)
         {
@@ -83,5 +88,6 @@ namespace RMSHOP.DAL.Repository.Products
             return true;
 
         }
+
     }
 }

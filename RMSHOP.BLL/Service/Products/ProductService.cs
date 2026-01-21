@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Microsoft.EntityFrameworkCore;
 using RMSHOP.DAL.DTO.Request.Products;
 using RMSHOP.DAL.DTO.Response.Categories;
 using RMSHOP.DAL.DTO.Response.Products;
@@ -59,10 +60,19 @@ namespace RMSHOP.BLL.Service.Products
             var filteredProducts = await _productRepository.GetAllProductsByCategoryForUserAsync(categoryId);
             return filteredProducts.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
         }
-        public async Task<List<ProductUserResponse>> GetAllForUserAsync(string lang)
+        public async Task<List<ProductUserResponse>> GetAllForUserAsync(string lang, int page, int limit)
         {
-            var products = await _productRepository.GetAllForUserAsync();
-            return products.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
+            //var products = await _productRepository.GetAllForUserAsync();
+            //return products.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
+
+            var query = _productRepository.Query();
+            //1.
+            var totalCount=await query.CountAsync();
+            //2. Pagination
+            query= query.Skip((page - 1) * limit).Take(limit);
+             
+            return query.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
+
         }
 
         public async Task<ProductDetailsForUserResponse> GetProductDetailsForUserAsync(int id, string lang)

@@ -14,6 +14,7 @@ namespace RMSHOP.DAL.Repository.Products
         Task<List<Product>> GetAllAsync();
         Task<List<Product>> GetAllProductsByCategoryForUserAsync(int categoryId);
         Task<List<Product>> GetAllForUserAsync();
+        IQueryable<Product> Query();
         Task<Product?> FindProductById(int id);
         Task<bool> DecreaseProductsQuantityAsync(List<(int productId, int quantity)> productsToDecreaseQuantity);
     }
