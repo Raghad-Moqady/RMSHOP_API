@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using RMSHOP.BLL.Service.Products;
+using RMSHOP.DAL.DTO.Response;
+using RMSHOP.DAL.DTO.Response.Products;
 using RMSHOP.PL.Resources;
 
 namespace RMSHOP.PL.Areas.User
@@ -31,9 +33,10 @@ namespace RMSHOP.PL.Areas.User
         public async Task<IActionResult> Index(
             [FromQuery] string lang = "en",
             [FromQuery] string? search=null,
+            [FromQuery] int? categoryId=null,
             [FromQuery] int page=1, [FromQuery] int limit=3)
         {
-            var response= await _productService.GetAllForUserAsync(lang, search ,page,limit);
+            var response= await _productService.GetAllForUserAsync(lang, search ,page,limit, categoryId);
             return Ok(new {message= _localizer["Success"].Value ,response });
         }
 
@@ -45,5 +48,6 @@ namespace RMSHOP.PL.Areas.User
         }
 
        
-    }
+        
+        }
 }

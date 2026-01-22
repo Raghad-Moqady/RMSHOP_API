@@ -61,23 +61,33 @@ namespace RMSHOP.BLL.Service.Products
             var filteredProducts = await _productRepository.GetAllProductsByCategoryForUserAsync(categoryId);
             return filteredProducts.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
         }
-        public async Task<PaginatedResponse<ProductUserResponse>> GetAllForUserAsync(string lang, string search, int page, int limit)
+        public async Task<PaginatedResponse<ProductUserResponse>> GetAllForUserAsync(
+            string lang,
+            string search,
+            int page,
+            int limit,
+            int? categoryId)
         {
             //old code without pagination & sort &... so on :
             //var products = await _productRepository.GetAllForUserAsync();
             //return products.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
 
             var query = _productRepository.Query();
-            //0.Search
+            //0*.Search
             if(search is not null)
             {
                 query = query.Where(p => p.Translations.Any(t => t.Language == lang && (t.Name.Contains(search)||t.Description.Contains(search))));
             };
+            //filter products by category id
+            if (categoryId is not null)
+            {
+                query= query.Where(p=>p.CategoryId== categoryId);
+            }
+             
 
-
-            //1.total Count
+            //1*.total Count
             var totalCount =await query.CountAsync();
-            //2. Pagination
+            //2*. Pagination
             query= query.Skip((page - 1) * limit).Take(limit);
              
             var response= query.BuildAdapter().AddParameters("lang",lang).AdaptToType<List<ProductUserResponse>>();
