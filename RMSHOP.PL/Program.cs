@@ -138,8 +138,11 @@ namespace RMSHOP.PL
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            // global exception handling middleware
-            app.UseMiddleware<GlobalExceptionHandling>();
+            // global exception handling middleware(way 1:old)
+            //app.UseMiddleware<GlobalExceptionHandling>();
+
+            // global exception handler(way 2:new)
+            app.UseExceptionHandler();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();

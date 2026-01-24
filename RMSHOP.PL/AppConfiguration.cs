@@ -49,8 +49,9 @@ namespace RMSHOP.PL
             Services.AddScoped<IOrderRepository, OrderRepository>();
             Services.AddScoped<IOrderItemRepository,OrderItemRepository>();
 
-
-
+            //for global exception handler(way 2:new)
+            Services.AddExceptionHandler<GlobalExceptionHandler>();
+            Services.AddProblemDetails();
         }
     }
 }
