@@ -63,7 +63,27 @@ namespace RMSHOP.PL.Areas.User
             return Ok(response);
         }
 
-
-
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> RemoveItemFromUserCart([FromRoute] int productId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = await _cartService.RemoveItemFromUserCartAsync(productId,userId);
+            if (!response.Success)
+            {
+                if (response.Message.Contains("Not Found"))
+                {
+                    //404
+                    return NotFound(response);
+                }
+                else
+                {
+                    //400
+                    return BadRequest(response);
+                }
+            }
+            //200
+            return Ok(response);
+        }
+         
     }
 }

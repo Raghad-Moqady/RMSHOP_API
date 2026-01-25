@@ -52,5 +52,11 @@ namespace RMSHOP.DAL.Repository.Carts
             _context.Carts.RemoveRange(cartItems);
             await _context.SaveChangesAsync();
         }
+
+        public async Task RemoveCartItemAsync(Cart cartItem)
+        {
+            _context.Carts.Remove(cartItem);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Identity;
 using RMSHOP.DAL.DTO.Request.Cart;
 using RMSHOP.DAL.DTO.Response;
 using RMSHOP.DAL.DTO.Response.Cart;
+using RMSHOP.DAL.Models;
 using RMSHOP.DAL.Models.cart;
 using RMSHOP.DAL.Repository.Carts;
 using RMSHOP.DAL.Repository.Products;
@@ -17,11 +19,14 @@ namespace RMSHOP.BLL.Service.Carts
     {
         private readonly ICartRepository _cartRepository;
         private readonly IProductRepository _productRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CartService(ICartRepository cartRepository ,IProductRepository productRepository)
+        public CartService(ICartRepository cartRepository ,IProductRepository productRepository
+            ,UserManager<ApplicationUser> userManager)
         {
             _cartRepository = cartRepository;
             _productRepository = productRepository;
+            _userManager = userManager;
         }
         public async Task<BaseResponse> AddToCartAsync(string userId, AddToCartRequest request)
         {
@@ -122,6 +127,50 @@ namespace RMSHOP.BLL.Service.Carts
                 Success = true,
                 Message = "Cart Cleared Successfully"
             };
+        }
+
+        public async Task<BaseResponse> RemoveItemFromUserCartAsync(int productId, string userId)
+        {
+            var product = await _productRepository.FindProductById(productId);
+            if (product is null)
+            {
+                //404
+                return new BaseResponse()
+                {
+                     Success = false,
+                     Message= "This product was Not Found in the database"
+                };
+            }
+            var user= await _userManager.FindByIdAsync(userId);
+            if (user is null)
+            {
+                //404
+                //هاي الحالة ممكن ما تصير لان منعت الcascade
+                //يعني ما دام اليوزر وصل لهاي المرحلة وكان عنده سلة ... الادمن ما بقدر يحذفه 
+                //للاحتياط
+                return new BaseResponse()
+                {
+                    Success = false,
+                    Message = "User Not Found"
+                };
+            }
+            var cartItem = await _cartRepository.GetCartItemAsync(userId,productId);
+            if (cartItem is null)
+            {
+                //400
+                return new BaseResponse()
+                {
+                    Success = false,
+                    Message = "This product is not found in the user's cart"
+                };
+            }
+            await _cartRepository.RemoveCartItemAsync(cartItem);
+            return new BaseResponse()
+            {
+                 Success= true,
+                 Message= "Cart item Deleted Successfully"
+            };
+  
         }
     }
 }
