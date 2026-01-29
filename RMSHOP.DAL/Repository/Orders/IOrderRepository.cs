@@ -12,5 +12,10 @@ namespace RMSHOP.DAL.Repository.Orders
         Task CreateOrderAsync(Order order);
         Task<Order?> GetOrderBySessionIdAsync(string session_id);
         Task UpdateAsync(Order order);
+
+        Task<List<Order>> GetOrdersByStatusAsync(OrderStatusEnum orderStatus);
+        Task<Order?> GetOrderByIdAsync(int orderId);
+
+
     }
 }

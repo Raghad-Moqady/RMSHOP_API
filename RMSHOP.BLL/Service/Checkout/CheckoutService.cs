@@ -161,6 +161,7 @@ namespace RMSHOP.BLL.Service.Checkout
             var order = await _orderRepository.GetOrderBySessionIdAsync(session_id);
             order.PaymentId= session.PaymentIntentId;
             order.OrderStatus = OrderStatusEnum.Approved;
+            order.PaymentStatus = PaymentStatusEnum.Paid;
             await _orderRepository.UpdateAsync(order);
              
             

@@ -33,5 +33,20 @@ namespace RMSHOP.DAL.Repository.Orders
             _context.Orders.Update(order);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<Order>> GetOrdersByStatusAsync(OrderStatusEnum orderStatus)
+        {
+            return await _context.Orders
+                .Where(o=>o.OrderStatus == orderStatus)
+                .Include(o=>o.User)
+                .ToListAsync();
+        }
+        public async Task<Order?> GetOrderByIdAsync(int orderId)
+        {
+            return await _context.Orders
+                .Include(o=>o.User)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi=>oi.Product.Translations)
+                .FirstOrDefaultAsync(o=>o.Id==orderId);
+        }
     }
 }

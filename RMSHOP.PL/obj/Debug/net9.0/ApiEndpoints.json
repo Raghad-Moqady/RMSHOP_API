@@ -100,6 +100,59 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "RMSHOP.PL.Areas.Admin.OrdersController",
+    "Method": "GetOrdersByStatus",
+    "RelativePath": "api/admin/Orders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderStatus",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RMSHOP.PL.Areas.Admin.OrdersController",
+    "Method": "GetOrderDetailsById",
+    "RelativePath": "api/admin/Orders/{orderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RMSHOP.PL.Areas.Admin.OrdersController",
+    "Method": "UpdateOrderStatus",
+    "RelativePath": "api/admin/Orders/{orderId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "RMSHOP.DAL.DTO.Request.Orders.UpdateOrderStatusRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "RMSHOP.PL.Areas.Admin.ProductsController",
     "Method": "Index",
     "RelativePath": "api/admin/Products",

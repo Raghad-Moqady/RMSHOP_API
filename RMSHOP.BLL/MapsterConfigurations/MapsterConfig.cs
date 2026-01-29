@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using RMSHOP.DAL.DTO.Response.Cart;
 using RMSHOP.DAL.DTO.Response.Categories;
+using RMSHOP.DAL.DTO.Response.Orders;
 using RMSHOP.DAL.DTO.Response.Products;
 using RMSHOP.DAL.Models.cart;
 using RMSHOP.DAL.Models.category;
@@ -79,6 +80,16 @@ namespace RMSHOP.BLL.MapsterConfigurations
             //     .Map(dest=> dest.Quantity, source=> source.Count)
             //     .Map(dest => dest.UnitPrice, source => source.Product.Price)
             //     .Map(dest => dest.TotalPrice, source => source.Count * source.Product.Price);
+
+            TypeAdapterConfig<Order, GetOrdersByStatusResponse>.NewConfig()
+                 .Map(dest => dest.FullName, source => source.User.FullName);
+
+            TypeAdapterConfig<Order, GetOrderDetailsResponse>.NewConfig()
+               .Map(dest => dest.FullName, source => source.User.FullName)
+               .Map(dest => dest.PhoneNumber, source => source.User.PhoneNumber)
+               .Map(dest => dest.City, source => source.User.City)
+               .Map(dest => dest.Street, source => source.User.Street)
+             ;
 
         }
 

@@ -4,6 +4,7 @@ using RMSHOP.BLL.Service.Carts;
 using RMSHOP.BLL.Service.Categories;
 using RMSHOP.BLL.Service.Checkout;
 using RMSHOP.BLL.Service.Identity;
+using RMSHOP.BLL.Service.Orders;
 using RMSHOP.BLL.Service.Products;
 using RMSHOP.BLL.Service.Token;
 using RMSHOP.DAL.Repository.Carts;
@@ -47,6 +48,7 @@ namespace RMSHOP.PL
 
             //Order
             Services.AddScoped<IOrderRepository, OrderRepository>();
+            Services.AddScoped<IOrderService, OrderService>();
             Services.AddScoped<IOrderItemRepository,OrderItemRepository>();
 
             //for global exception handler(way 2:new)

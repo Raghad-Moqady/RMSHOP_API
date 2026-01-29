@@ -14,6 +14,7 @@ namespace RMSHOP.DAL.Models.order
         public DateTime OrderDate { get; set; }= DateTime.UtcNow;
         public DateTime? ShippedDate {  get; set; }
         public PaymentMethodEnum PaymentMethod { get; set; }
+        public PaymentStatusEnum PaymentStatus { get; set; } = PaymentStatusEnum.UnPaid;
 
         //from Stripe=> if payment method = visa
         public string? SessionId { get; set; }
