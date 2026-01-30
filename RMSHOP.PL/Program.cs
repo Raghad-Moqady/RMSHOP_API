@@ -24,6 +24,17 @@ namespace RMSHOP.PL
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //to solve CORS  policy issue
+            var MyAllowSpecificOrigins = "_myAllowOrigins";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  { 
+                                      policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                                  });
+            });
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -138,6 +149,9 @@ namespace RMSHOP.PL
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            //to solve CORS  policy issue
+            app.UseCors(MyAllowSpecificOrigins);
+
             // global exception handling middleware(way 1:old)
             //app.UseMiddleware<GlobalExceptionHandling>();
 
