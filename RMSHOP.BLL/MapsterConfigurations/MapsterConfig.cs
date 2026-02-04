@@ -94,7 +94,8 @@ namespace RMSHOP.BLL.MapsterConfigurations
              ;
 
             TypeAdapterConfig<Review, ReviewResponse>.NewConfig()
-                            .Map(dest => dest.FullName, source => source.User.FullName);
+                            .Map(dest => dest.FullName, source => source.User.FullName)
+                            .Map(dest=> dest.CreatedAt, source=> source.CreatedAt.ToString("dd-MM-yyyy"));
 
             
             TypeAdapterConfig<OrderItem, OrderItemResponse>.NewConfig()

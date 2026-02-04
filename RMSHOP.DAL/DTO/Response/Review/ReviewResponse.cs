@@ -14,6 +14,6 @@ namespace RMSHOP.DAL.DTO.Response.Review
         public string FullName { get; set; } 
         public string Comment { get; set; }
         public int Rating { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
     }
 }
